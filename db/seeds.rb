@@ -1,7 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+survey1 = Survey.create!(name: "Pisano Survey")
+question1 = Question.create!(title: "How was your experience with us today?", question_type: 1,
+                            survey_id: survey1.id)
+Question.create!(title: "Please explain the reason for your choice", question_type: 0,
+                            survey_id: survey1.id)
+Option.create!(title: "Very Good", question_id: question1.id)
+Option.create!(title: "Good", question_id: question1.id)
+Option.create!(title: "Neutral", question_id: question1.id)
+Option.create!(title: "Bad", question_id: question1.id)
+Option.create!(title: "Very Bad", question_id: question1.id)
