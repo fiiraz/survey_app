@@ -1,11 +1,10 @@
 class Api::V1::SurveysController < ApplicationController
-  before_action :find_survey, only: [:show, :create]
+  before_action :find_survey, only: %i[show create]
 
   def show
     render json: @survey,
            serializer: SurveySerializer,
            include: ['questions', 'questions.options']
-
   end
 
   def create
@@ -13,13 +12,14 @@ class Api::V1::SurveysController < ApplicationController
       feedback = Feedback.new(survey: @survey)
       params[:answers].each do |answer|
         question = Question.find(answer[:question_id])
-        if answer[:type] == "option"
+        case answer[:type]
+        when 'option'
           option = Option.find(answer[:option_id])
-          response = Response.new(question: question, option: option, feedback: feedback)
-        elsif answer[:type] == "text"
-          response = Response.new(question: question, body: answer[:body], feedback: feedback)
+          response = Response.new(question:, option:, feedback:)
+        when 'text'
+          response = Response.new(question:, body: answer[:body], feedback:)
         else
-          return render json: { error: "question type is not supported" }, status: :unprocessable_entity
+          return render json: { error: 'question type is not supported' }, status: :unprocessable_entity
         end
         feedback.save!
         response.save!

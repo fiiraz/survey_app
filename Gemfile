@@ -42,6 +42,16 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'pry'
+  gem "pry-byebug"
+  gem "guard-rubocop"
+  gem "rubocop"
+  gem "rubocop-performance"
+  gem "rubocop-rails"
+  gem "rubocop-rspec"
+  gem "rubocop-rspec-focused"
+  gem "guard"
+  gem "guard-rspec"
+  gem "rspec-rails"
 end
 
 group :development do
