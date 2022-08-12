@@ -1,8 +1,7 @@
 class Response < ApplicationRecord
-  belongs_to :survey
-  has_many :options, through: :questions, optional: true
-  has_many :questions, through: :survey
-  has_many :feedbacks, through: :survey
+  belongs_to :option, optional: true
+  belongs_to :question
+  belongs_to :feedback
 
-  validates :body, length: { maximum: 140 }
+  validates :body, length: { maximum: 280 }
 end
