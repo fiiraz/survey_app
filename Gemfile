@@ -52,6 +52,8 @@ group :development, :test do
   gem "rubocop-rails"
   gem "rubocop-rspec"
   gem "rubocop-rspec-focused"
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
 end
 
 group :development do
