@@ -10,8 +10,7 @@ class Api::V1::SurveysController < ApplicationController
 
   def create
     Response.transaction do
-      build_responses
-      @feedback.responses.each do |response|
+      build_responses.each do |response|
         render json: response.errors, status: :unprocessable_entity unless response.save!
       end
     end
@@ -32,7 +31,7 @@ class Api::V1::SurveysController < ApplicationController
       @feedback = Feedback.new(survey: @survey)
       @params.map do |answer|
         answer[:feedback] = @feedback
-        @feedback.responses.new(answer)
+        Response.new(answer)
       end
     end
 end
