@@ -1,4 +1,5 @@
 class Api::V1::SurveysController < ApplicationController
+  before_action :answer_params, only: %i[show create]
   before_action :find_survey, only: %i[show create]
 
   def show
@@ -9,21 +10,9 @@ class Api::V1::SurveysController < ApplicationController
 
   def create
     Response.transaction do
-      feedback = Feedback.new(survey: @survey)
-      params[:answers].each do |answer|
-        question = Question.find(answer[:question_id])
-        case answer[:type]
-        when "option"
-          option = Option.find(answer[:option_id])
-          response = Response.new(question:, option:, feedback:)
-        when "text"
-          response = Response.new(question:, body: answer[:body], feedback:)
-        else
-          return render json: { error: "question type is not supported" },
-                        status: :unprocessable_entity
-        end
-        feedback.save!
-        response.save!
+      build_responses
+      @feedback.responses.each do |response|
+        render json: response.errors, status: :unprocessable_entity unless response.save!
       end
     end
   end
@@ -32,5 +21,18 @@ class Api::V1::SurveysController < ApplicationController
 
     def find_survey
       @survey = Survey.find(params[:id])
+    end
+
+    def answer_params
+      @params = params.permit(:id, :survey,
+                              answers: %i[question_id option_id body])[:answers]
+    end
+
+    def build_responses
+      @feedback = Feedback.new(survey: @survey)
+      @params.map do |answer|
+        answer[:feedback] = @feedback
+        @feedback.responses.new(answer)
+      end
     end
 end

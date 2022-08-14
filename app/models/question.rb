@@ -7,4 +7,12 @@ class Question < ApplicationRecord
 
   validates :title, length: { maximum: 280 }, presence: true
   validates :question_type, presence: true
+
+  def text?
+    question_type == "text"
+  end
+
+  def option?
+    question_type == "option"
+  end
 end
