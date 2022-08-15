@@ -28,6 +28,8 @@ RSpec.describe Question, type: :model do
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_length_of(:title).is_at_most(280) }
     it { is_expected.to validate_presence_of(:question_type) }
+    it { expect(question.text?).to be(true) }
+    it { expect(question.choice?).to be(false) }
   end
 
   describe "relations" do

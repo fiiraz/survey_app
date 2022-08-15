@@ -31,7 +31,7 @@ class Question < ApplicationRecord
     question_type == "text"
   end
 
-  def option?
-    question_type == "option"
+  def choice?
+    question_type == "choice"
   end
 end
