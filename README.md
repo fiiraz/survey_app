@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Survey APP is a basic web application that allows you to create answers for surveys and take them.
 
-Things you may want to cover:
+#Ruby version
+3.1.2
 
-* Ruby version
+#Rails version
+7.0.3.1
 
-* System dependencies
+# Database creation and initialization
+* db:create
+* db:migrate
+* db:seed
 
-* Configuration
+# Run the server docker container
+* docker compose run web rake db:create db:migrate db:seed
+* docker-compose up
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Get the id of the survey you want to take
+* docker compose run web rails c
+* Survey.last.id
