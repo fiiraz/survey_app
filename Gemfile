@@ -37,11 +37,12 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 
 gem "active_model_serializers", "~> 0.10.0"
-gem 'simplecov', require: false, group: :test
+gem "simplecov", require: false, group: :test
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "factory_bot_rails"
   gem "guard"
   gem "guard-rspec"
   gem "guard-rubocop"
@@ -53,8 +54,7 @@ group :development, :test do
   gem "rubocop-rails"
   gem "rubocop-rspec"
   gem "rubocop-rspec-focused"
-  gem 'factory_bot_rails'
-  gem 'shoulda-matchers'
+  gem "shoulda-matchers"
 end
 
 group :development do

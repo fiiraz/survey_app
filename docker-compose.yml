@@ -2,24 +2,27 @@ version: "3.9"
 
 services:
   web:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    entrypoint: ['bundle', 'exec', 'puma', '-C', 'config/puma.rb']
+    environment:
+      DATABASE_URL: postgresql://surveyapp:surveyapp@database:5432/survey_app_development
+      REDIS_URL: redis://redis:6379/0
     volumes:
       - .:/app
     ports:
       - "3000:3000"
     depends_on:
       - database
+      - redis
   database:
-    image: postgres
+    image: postgres:14
     container_name: survey_postgresql
     ports:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data:delegated
     environment:
-      POSTGRES_USER: ozgurpir
-      POSTGRES_PASSWORD: 141623
+      POSTGRES_USER: surveyapp
+      POSTGRES_PASSWORD: surveyapp
       POSTGRES_DB: survey_app_development
   redis:
     image: redis
